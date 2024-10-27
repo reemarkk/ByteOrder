@@ -1,28 +1,37 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+long long int hton64(long long int a){
+     char * ptr1 = (char *) &a; // Pointer to the original value
+     long long int temp; 
+     char * ptr2 = (char *) &temp;
+     
+     // Convert from little-endian to big-endian
+     
+     for( int i=0;i<8;i++){
+          *(ptr2 + i)=*(ptr1 + 7 - i);}
+          
+     long long int result;   //return value
+     char * ptr3=(char*) &result;
+
+     // Assign the bytes
+     for (int i=0;i<8;i++){
+          *(ptr3+i)=*(ptr2+i);}
+          
+     return result;
+}
+
 void printHex(long long int number) {
     printf("0x%016llX\n", number);
 }
 
-long long int LittletoBig(long long int number){
-  char * pn =(char *) &number;
-    
-    long long int result = 0;
-    
-    for(int i = 0; i < 8; i++){
-        result |= (long long int)(pn[i]) << (56 - i * 8);
-    }
-    return result;
+int main() {
+    long long int a = 0x123456789ABCDEF0; 
+    long long int res = hton64(a);
+    printf("ORIGINAL: ");
+    printHex(a);
+    printf("\n");
+    printf("MODIFIED: ");
+    printHex(res);
+    return 0;
 }
-
-int main(void){
-        long long int testNumber = 0x0102030405060708;
-        printf("Original : ");
-        printHex(testNumber);
-    
-    long long int result = LittletoBig(testNumber);
-        printf("Converted : ");
-        printHex(result);
-    
-        return 0;
-    }
-
