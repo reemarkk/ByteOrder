@@ -11,14 +11,7 @@ long long int hton64(long long int a){
      for( int i=0;i<8;i++){
           *(ptr2 + i)=*(ptr1 + 7 - i);}
           
-     long long int result;   //return value
-     char * ptr3=(char*) &result;
-
-     // Assign the bytes
-     for (int i=0;i<8;i++){
-          *(ptr3+i)=*(ptr2+i);}
-          
-     return result;
+     return temp;
 }
 
 void printHex(long long int number) {
